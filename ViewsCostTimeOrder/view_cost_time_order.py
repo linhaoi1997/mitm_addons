@@ -4,7 +4,7 @@ mitmproxy不支持按照接口返回时间进行排序
 修改mitm这个文件的代码
     mitmproxy/addons/view.py
 主要修改代码为
-加入 110-119行 和第146行
+加入 115-124行 和第149行
 暂时没找到使用插件的方式做这件事
 """
 import collections
