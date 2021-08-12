@@ -19,13 +19,21 @@ class ChangeParamsByPath:
 
     @classmethod
     def _change_value(cls, value: str):
+        if not isinstance(value, str):
+            value = str(value)
+
         if value.isdigit():  # 如果是数字就不用计算
-            return str(int(value) + 1)
+            if len(value) == 10:  # 判断为时间戳
+                return int(value) + 3600 * 24
+            elif len(value) == 13:
+                return int(value) + 3600 * 24 * 1000
+            else:
+                return str(int(value) + 1)
         l_ = len(value) - 1
         while value[l_].isdigit() and l_ >= 0:  # 拿到数字后缀
             l_ -= 1
         front = value[:l_ + 1]
-        back = value[l_ + 1:] or 1 # 可能不存在数字后缀，那么默认从0开始
+        back = value[l_ + 1:] or 1  # 可能不存在数字后缀，那么默认从0开始
         return front + str(int(back) + 1)
 
     @classmethod
@@ -94,8 +102,8 @@ class AutoPlayFlows:
                         hf.request.headers.insert(0, "host", host)
                 # replay auto nums
                 data_ = json.loads(hf.request.text)
-                for i in paths:
-                    ChangeParamsByPath.change(data_, i)
+                for j in paths:
+                    ChangeParamsByPath.change(data_, j)
                 ctx.log(data_)
                 hf.request.text = json.dumps(data_)
                 lst.append(hf)
@@ -107,8 +115,11 @@ class AutoPlayFlows:
 addon = AutoPlayFlows()
 
 if __name__ == '__main__':
-    data = {"input": {"name": "ces9"}}
+    data = {"input": {"name": "ces9", "account": "account_1"}}
     ChangeParamsByPath.change(data, "input.name")
+    assert data["input"]["name"] == "ces10"
     ChangeParamsByPath.change(data, "input.name")
+    assert data["input"]["name"] == "ces11"
     ChangeParamsByPath.change(data, "input.name")
-    print(data)
+    assert data["input"]["name"] == "ces12"
+    # 修改
