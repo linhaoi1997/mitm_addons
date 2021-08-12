@@ -20,7 +20,7 @@ class ViewAuto(base.View):
             ct = http.parse_content_type(ctype) if ctype else None
             ct = "%s/%s" % (ct[0], ct[1])
             if is_graphql:
-                return contentviews.get("Graphqlquery")(data, **metadata)
+                return contentviews.get("GraphqlVariables")(data, **metadata)
             if ct in contentviews.content_types_map:
                 return contentviews.content_types_map[ct][0](data, **metadata)
             elif strutils.is_xml(data):

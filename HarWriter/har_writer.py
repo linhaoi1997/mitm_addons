@@ -1,5 +1,6 @@
 """
 参考生成har的博客
+功能为把一些接口转化为har的格式
 http://testerhome.com/topics/29457?order_by=like&
 """
 

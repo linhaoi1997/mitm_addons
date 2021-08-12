@@ -130,3 +130,5 @@ dmypy.json
 /venv_new
 .idea/
 output/
+result
+result.json
